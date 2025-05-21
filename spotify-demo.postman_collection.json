@@ -1,0 +1,580 @@
+{
+	"info": {
+		"_postman_id": "0e5398a6-c660-4dee-be2c-e158cede865c",
+		"name": "spotify-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42519152"
+	},
+	"item": [
+		{
+			"name": "GET_TRACK_BY_ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.to.have.status(200));\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Album object contains required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData.album).to.exist;\r",
+							"    pm.expect(responseData.album).to.have.property('album_type');\r",
+							"    pm.expect(responseData.album).to.have.property('artists');\r",
+							"    pm.expect(responseData.album).to.have.property('available_markets');\r",
+							"    pm.expect(responseData.album).to.have.property('images');\r",
+							"    pm.expect(responseData.album).to.have.property('name');\r",
+							"    pm.expect(responseData.album).to.have.property('release_date');\r",
+							"    pm.expect(responseData.album).to.have.property('release_date_precision');\r",
+							"    pm.expect(responseData.album).to.have.property('total_tracks');\r",
+							"    pm.expect(responseData.album).to.have.property('type');\r",
+							"    pm.expect(responseData.album).to.have.property('uri');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate data types and formats\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData.disc_number).to.be.a('number');\r",
+							"    pm.expect(responseData.duration_ms).to.be.a('number');\r",
+							"    pm.expect(responseData.explicit).to.be.a('boolean');\r",
+							"    pm.expect(responseData.external_ids).to.be.an('object');\r",
+							"    pm.expect(responseData.is_local).to.be.a('boolean');\r",
+							"    pm.expect(responseData.name).to.be.a('string');\r",
+							"    pm.expect(responseData.popularity).to.be.a('number');\r",
+							"    pm.expect(responseData.preview_url).to.be.oneOf([null, 'string']);\r",
+							"    pm.expect(responseData.track_number).to.be.a('number');\r",
+							"    pm.expect(responseData.type).to.be.a('string');\r",
+							"    pm.expect(responseData.uri).to.be.a('string');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/tracks/3yHyiUDJdz02FZ6jfUbsmY?si=75ef5b63f4fa4da2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"tracks",
+						"3yHyiUDJdz02FZ6jfUbsmY"
+					],
+					"query": [
+						{
+							"key": "si",
+							"value": "75ef5b63f4fa4da2"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl --request GET \\\r\n  --url https://api.spotify.com/v1/tracks/11dFghVXANMlKmJXsNCbNl \\\r\n  --header 'Authorization: Bearer 1POdFZRZbvb...qqillRxMr2z'"
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE_PLAYLIST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for status code\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Test for response time\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"// Test for response body properties\r",
+							"pm.test(\"Response has 'name' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('name');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has 'description' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('description');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has 'external_urls' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('external_urls');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has 'public' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('public');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has 'owner' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('owner');\r",
+							"});\r",
+							"\r",
+							"// Test for response body schema\r",
+							"pm.test(\"Response body is a valid JSON\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Response body has correct schema\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.have.property('collaborative');\r",
+							"    pm.expect(response).to.have.property('description');\r",
+							"    pm.expect(response).to.have.property('external_urls');\r",
+							"    pm.expect(response).to.have.property('followers');\r",
+							"    pm.expect(response).to.have.property('href');\r",
+							"    pm.expect(response).to.have.property('id');\r",
+							"    pm.expect(response).to.have.property('images');\r",
+							"    pm.expect(response).to.have.property('primary_color');\r",
+							"    pm.expect(response).to.have.property('name');\r",
+							"    pm.expect(response).to.have.property('type');\r",
+							"    pm.expect(response).to.have.property('uri');\r",
+							"    pm.expect(response).to.have.property('owner');\r",
+							"    pm.expect(response).to.have.property('public');\r",
+							"    pm.expect(response).to.have.property('snapshot_id');\r",
+							"    pm.expect(response).to.have.property('tracks');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "scope",
+						"value": "playlist-modify-public playlist-modify-private",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Demo Playlist\",\r\n    \"description\": \"New playlist description\",\r\n    \"public\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/v1/users/317dv7sseb6nvqmeuyfyxlwrx5d4/playlists",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"users",
+						"317dv7sseb6nvqmeuyfyxlwrx5d4",
+						"playlists"
+					]
+				},
+				"description": "The access token generated in the POST request \"Access_token_generator\"  \nshould be used for authorization"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_CURRENT_USER_ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test for response time\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"// Test for response body properties\r",
+							"pm.test(\"Response body has display_name\", function () {\r",
+							"    pm.expect(pm.response.json().display_name).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has external_urls\", function () {\r",
+							"    pm.expect(pm.response.json().external_urls).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has followers\", function () {\r",
+							"    pm.expect(pm.response.json().followers).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has href\", function () {\r",
+							"    pm.expect(pm.response.json().href).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has id\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has images\", function () {\r",
+							"    pm.expect(pm.response.json().images).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has type\", function () {\r",
+							"    pm.expect(pm.response.json().type).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has uri\", function () {\r",
+							"    pm.expect(pm.response.json().uri).to.exist;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/me",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"me"
+					]
+				},
+				"description": "Generated from cURL: curl -H \"Authorization: Bearer YOUR_TOKEN\" https://api.spotify.com/v1/me\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Access_token_generator",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{clientAuthCode}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "code",
+							"value": "{{authenticationCode}}",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://127.0.0.1:3000",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://accounts.spotify.com/api/token",
+					"protocol": "https",
+					"host": [
+						"accounts",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"api",
+						"token"
+					]
+				},
+				"description": "For Authorization:  \n1\\. Run this in the browser \"[https://accounts.spotify.com/authorize?response_type=code&amp;client_id=780e72d7b3bc4d92b94b125c749b2b15&amp;scope=playlist-modify-private](https://accounts.spotify.com/authorize?response_type=code&client_id=780e72d7b3bc4d92b94b125c749b2b15&scope=playlist-modify-private) playlist-modify-public&redirect_uri=[http://127.0.0.1:3000&amp;state=random123abcEndFragment\"](http://127.0.0.1:3000&state=random123abcEndFragment)\n\n2\\. Copy paste the url from the browser and get the code in it  \n3\\. Put the code in the Body along with grant_type and redirect uri and in Headers: Authorization: Basic \n\nresponse:  \nthe access token should be generated"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_ALBUM_BY_ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for response status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test for response time\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"// Test for the presence of specific fields in the response body\r",
+							"pm.test(\"Response contains album type\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.album_type).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains total tracks\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.total_tracks).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains available markets\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.available_markets).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains external URLs\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.external_urls).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains images\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.images).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains name\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.name).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains release date\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.release_date).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains artists\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.artists).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains tracks\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.tracks).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains copyrights\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.copyrights).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains external ids\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.external_ids).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains label\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.label).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains popularity\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.popularity).to.exist;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/albums/4gKYKbIsDeQSlWIiukYV3P",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"albums",
+						"4gKYKbIsDeQSlWIiukYV3P"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_SEVERAL_ARTIST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for response status code\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test for response time\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"// Test for response body properties\r",
+							"pm.test(\"Response body has artists, external_urls, followers, genres, href, id, images, name, popularity, type, and uri\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('artists');\r",
+							"    pm.expect(jsonData.artists).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('external_urls');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('followers');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('genres');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('href');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('id');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('images');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('name');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('popularity');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('type');\r",
+							"    pm.expect(jsonData.artists[0]).to.have.property('uri');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/artists?ids=0oOet2f43PA68X5RxKobEy,4YRxDV8wJFPHPTeXepOstw",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"artists"
+					],
+					"query": [
+						{
+							"key": "ids",
+							"value": "0oOet2f43PA68X5RxKobEy,4YRxDV8wJFPHPTeXepOstw"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD_TRACKS_IN_PLAYLIST",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/artists?ids=0oOet2f43PA68X5RxKobEy,4YRxDV8wJFPHPTeXepOstw",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"artists"
+					],
+					"query": [
+						{
+							"key": "ids",
+							"value": "0oOet2f43PA68X5RxKobEy,4YRxDV8wJFPHPTeXepOstw"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

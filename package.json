@@ -1,0 +1,25 @@
+{
+  "name": "spotify-rest-api-postman",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "test:api": "newman run spotify-demo.postman_collection.json -r cli,html --reporter-html-export output.html -e QA.postman_environment.json"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aanchal-av/spotify-rest-api-postman.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aanchal-av/spotify-rest-api-postman/issues"
+  },
+  "homepage": "https://github.com/aanchal-av/spotify-rest-api-postman#readme",
+  "devDependencies": {
+    "newman": "^4.6.1",
+    "newman-reporter-html": "^1.0.5"
+  }
+}
