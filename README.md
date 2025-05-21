@@ -6,4 +6,4 @@ npm install --save-dev newman newman-reporter-html
 newman run .\spotify-demo.postman_collection.json -r cli,html --reporter-html-export output.html
 
 
-![Screenshot 2025-05-21 154017](https://github.com/user-attachments/assets/0e9d82e7-36ab-4ed5-9196-ad2df06cf054)
+![Screenshot 2025-05-21 163705](https://github.com/user-attachments/assets/356f3261-54aa-4ca5-81bd-d11729fbd280)
